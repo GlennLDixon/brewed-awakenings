@@ -1,7 +1,7 @@
 import { getProducts, getEmployees, getOrders } from "./database.js"
 
 // Get copy of state for use in this module
-const products = getProducts()
+// const products = getProducts()
 const employees = getEmployees()
 const orders = getOrders()
 
@@ -20,7 +20,7 @@ const findProduct = (order, allProducts) => {
 
 // Function whose responsibility is to find the employee for an order
 const findEmployee = (order, allEmployees) => {
-    let orderEmployee = ""
+    let orderEmployee = null
 
     for (const employee of allEmployees) {
         if (employee.id === order.employeeId) {
@@ -37,9 +37,13 @@ export const Orders = () => {
 
     for (const order of orders) {
         const employee = findEmployee(order, employees)
-        const product = findProduct(order, products)
+        const product = findProduct(order, getProducts())
         console.log(employee)
-        html += `<li>${product.name} was sold by ${employee.name} on ${new Date(order.timestamp).toLocaleDateString()}</li>`
+        if (employee) {
+            html += `<li>${product.name} was sold by ${employee.name} on ${new Date(order.timestamp).toLocaleDateString()}</li>`
+        } else {
+            html +=  `<li>Order does not exist</li>`
+        }
     }
 
     html += "</ul>"

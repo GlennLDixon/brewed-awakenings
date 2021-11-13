@@ -1,5 +1,14 @@
 import { getProducts } from "./database.js"
 
+document.addEventListener("click", (clickEvent) => {
+    const itemClicked = clickEvent.target
+    for (const product of products) {
+        if(product) {
+            message = window.alert(`${product.price}`)
+        }
+    }
+})
+
 const products = getProducts()
 
 export const Products = () => {
